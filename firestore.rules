@@ -1,0 +1,67 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Public catalog of audited internships
+    match /internships/{internshipId} {
+      allow read: if true;
+      allow write: if false; // Only admin or system can modify listings
+    }
+
+    // User-scoped application tracker
+    match /users/{userId}/applications/{applicationId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId)
+        && isValidId(applicationId)
+        && request.resource.data.userId == userId
+        && request.resource.data.internshipId is string
+        && request.resource.data.internshipId.size() <= 128
+        && request.resource.data.status in ['Saved', 'Applied', 'Interview', 'Offer', 'Rejected']
+        && request.resource.data.deadline is string
+        && request.resource.data.deadline.size() <= 30;
+      allow update: if isOwner(userId)
+        && request.resource.data.userId == userId
+        && request.resource.data.status in ['Saved', 'Applied', 'Interview', 'Offer', 'Rejected'];
+      allow delete: if isOwner(userId);
+    }
+
+    // User-scoped student profile & skills
+    match /users/{userId}/profile {
+      allow read: if isOwner(userId);
+      allow write: if isOwner(userId)
+        && request.resource.data.uid == userId
+        && request.resource.data.name is string
+        && request.resource.data.name.size() <= 100
+        && request.resource.data.skills is list
+        && request.resource.data.skills.size() <= 50;
+    }
+
+    // Community reports for suspicious listings
+    match /reports/{reportId} {
+      allow create: if isValidId(reportId)
+        && request.resource.data.internshipId is string
+        && request.resource.data.internshipId.size() <= 128
+        && request.resource.data.reason is string
+        && request.resource.data.reason.size() <= 200;
+      allow read: if isSignedIn();
+      allow update, delete: if false;
+    }
+  }
+}

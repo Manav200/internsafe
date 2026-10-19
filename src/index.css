@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-bg-base: #09090b;
+    --color-surface-lowest: #0c0c0f;
+    --color-surface-container: #121215;
+    --color-surface-high: #18181b;
+    --color-surface-highest: #222226;
+    --color-border-outline: #27272a;
+    --color-border-hover: #3f3f46;
+    --color-primary: #a78bfa;
+    --color-primary-hover: #bba4fb;
+    --color-tertiary: #34d399;
+    --color-error: #ef4444;
+    --color-warning: #f59e0b;
+    --color-text-primary: #fafafa;
+    --color-text-secondary: #a1a1aa;
+    --color-text-muted: #71717a;
+
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    color-scheme: dark;
+    background-color: #09090b;
+    color: #fafafa;
+  }
+
+  * {
+    border-color: #27272a;
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: #09090b;
+    color: #fafafa;
+    min-height: 100vh;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.02em;
+    color: #fafafa;
+  }
+
+  code, pre, kbd, samp {
+    font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  /* Custom dark scrollbar */
+  ::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #09090b;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #27272a;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3f3f46;
+  }
+}
+
+/* Obsidian High-Contrast Dark Utility Classes */
+.obsidian-card {
+  background-color: #121215;
+  border: 1px solid #27272a;
+  border-radius: 8px;
+}
+
+.obsidian-card-hover {
+  background-color: #121215;
+  border: 1px solid #27272a;
+  border-radius: 8px;
+  transition: all 0.15s ease-in-out;
+}
+.obsidian-card-hover:hover {
+  background-color: #18181b;
+  border-color: #3f3f46;
+}
+
+.obsidian-input {
+  background-color: #121215;
+  border: 1px solid #27272a;
+  color: #fafafa;
+  border-radius: 8px;
+  transition: all 0.15s ease-in-out;
+}
+.obsidian-input::placeholder {
+  color: #71717a;
+}
+.obsidian-input:focus {
+  outline: none;
+  border-color: #a78bfa;
+  box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.4);
+}
+
+.obsidian-code {
+  background-color: #0c0c0f;
+  border: 1px solid #27272a;
+  font-family: 'Geist Mono', monospace;
+  border-radius: 8px;
+}
+
+/* Button styles */
+.obsidian-btn-primary {
+  background-color: #a78bfa;
+  color: #09090b;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: all 0.15s ease-in-out;
+}
+.obsidian-btn-primary:hover {
+  background-color: #bba4fb;
+}
+.obsidian-btn-primary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #09090b, 0 0 0 4px #a78bfa;
+}
+
+.obsidian-btn-secondary {
+  background-color: transparent;
+  color: #fafafa;
+  border: 1px solid #27272a;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.15s ease-in-out;
+}
+.obsidian-btn-secondary:hover {
+  background-color: #18181b;
+  border-color: #3f3f46;
+}
+.obsidian-btn-secondary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #09090b, 0 0 0 4px #a78bfa;
+}
+
+.obsidian-btn-ghost {
+  background-color: transparent;
+  color: #a1a1aa;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.15s ease-in-out;
+}
+.obsidian-btn-ghost:hover {
+  background-color: #18181b;
+  color: #fafafa;
+}
+.obsidian-btn-ghost:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #09090b, 0 0 0 4px #a78bfa;
+}

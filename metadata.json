@@ -1,0 +1,6 @@
+{
+  "name": "InternSafe",
+  "description": "Discover legitimate internships and identify risky listings with red flag checklist detection, skill matching, and application tracking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

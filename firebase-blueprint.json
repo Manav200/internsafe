@@ -1,0 +1,87 @@
+{
+  "entities": {
+    "Internship": {
+      "title": "Internship",
+      "description": "An internship posting audited for risk and student safety",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 150 },
+        "company": { "type": "string", "maxLength": 100 },
+        "location": { "type": "string", "maxLength": 100 },
+        "workMode": { "type": "string", "enum": ["wfh", "offline", "hybrid"] },
+        "compensationType": { "type": "string", "enum": ["paid", "unpaid"] },
+        "stipend": { "type": "string", "maxLength": 80 },
+        "duration": { "type": "string", "maxLength": 50 },
+        "requiredSkills": { "type": "array" },
+        "description": { "type": "string", "maxLength": 2000 },
+        "deadline": { "type": "string", "maxLength": 20 },
+        "riskScore": { "type": "string", "enum": ["low", "medium", "high"] },
+        "riskSummary": { "type": "string", "maxLength": 500 }
+      },
+      "required": ["title", "company", "location", "workMode", "compensationType", "stipend", "deadline", "riskScore"]
+    },
+    "Application": {
+      "title": "Application",
+      "description": "A tracked student internship application record",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "internshipId": { "type": "string", "maxLength": 128 },
+        "status": { "type": "string", "enum": ["Saved", "Applied", "Interview", "Offer", "Rejected"] },
+        "appliedDate": { "type": "string", "maxLength": 30 },
+        "deadline": { "type": "string", "maxLength": 30 },
+        "notes": { "type": "string", "maxLength": 1000 },
+        "updatedAt": { "type": "string", "maxLength": 40 }
+      },
+      "required": ["userId", "internshipId", "status", "deadline", "updatedAt"]
+    },
+    "Report": {
+      "title": "Report",
+      "description": "A user report flagging a fraudulent or suspicious internship listing",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "internshipId": { "type": "string", "maxLength": 128 },
+        "internshipTitle": { "type": "string", "maxLength": 150 },
+        "company": { "type": "string", "maxLength": 100 },
+        "reason": { "type": "string", "maxLength": 200 },
+        "details": { "type": "string", "maxLength": 1500 },
+        "reporterEmail": { "type": "string", "maxLength": 120 },
+        "reportedAt": { "type": "string", "maxLength": 40 }
+      },
+      "required": ["internshipId", "internshipTitle", "company", "reason", "reportedAt"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Student profile preferences and skills",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 120 },
+        "college": { "type": "string", "maxLength": 150 },
+        "skills": { "type": "array" },
+        "updatedAt": { "type": "string", "maxLength": 40 }
+      },
+      "required": ["uid", "name", "skills"]
+    }
+  },
+  "firestore": {
+    "/internships/{internshipId}": {
+      "schema": { "$ref": "#/entities/Internship" },
+      "description": "Public catalog of audited internship opportunities"
+    },
+    "/users/{userId}/applications/{applicationId}": {
+      "schema": { "$ref": "#/entities/Application" },
+      "description": "User specific internship application pipeline tracker"
+    },
+    "/users/{userId}/profile": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User student profile information and verified skills"
+    },
+    "/reports/{reportId}": {
+      "schema": { "$ref": "#/entities/Report" },
+      "description": "Community reported suspicious and scam listings"
+    }
+  }
+}
